@@ -1,0 +1,161 @@
+/*type selectors*/
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 24px;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background-color: rgb(185, 206, 232);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+  margin: 0 0;
+  background: rgb(132,141,228);
+  background: -moz-linear-gradient(80deg, rgba(132,141,228,1) 34%, rgba(135,117,209,1) 66%, rgba(132,103,198,1) 94%);
+  background: -webkit-linear-gradient(80deg, rgba(132,141,228,1) 34%, rgba(135,117,209,1) 66%, rgba(132,103,198,1) 94%);
+  background: linear-gradient(80deg, rgba(132,141,228,1) 34%, rgba(135,117,209,1) 66%, rgba(132,103,198,1) 94%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#848de4",endColorstr="#8467c6",GradientType=1);
+  padding: 0.5vw;
+}
+
+main {
+  flex-grow: 1;
+  margin-bottom: 25px;
+}
+
+footer {
+  display: flex;
+  margin: 0 0;
+  background: rgb(138,132,228);
+  background: -moz-linear-gradient(135deg, rgba(138,132,228,1) 22%, rgb(77, 58, 119) 100%);
+  background: -webkit-linear-gradient(135deg, rgba(138,132,228,1) 22%, rgba(77, 58, 119, 1) 100%);
+  background: linear-gradient(135deg, rgba(138,132,228,1) 22%, rgba(77, 58, 119, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8a84e4",endColorstr="#3c2d5c",GradientType=1);
+  padding: 1.3vw;
+  flex-shrink: 0;
+}
+
+h1 {
+  flex: 5;
+  margin: 0;
+  margin-right: 3vw;
+  font-size: calc(30px + 1.3vw);
+  text-align: center;
+  }
+
+h2 {
+  font-size: calc(16px + 1vw);
+  text-align: center;
+}
+
+input {
+  width: 30px;
+  height: 22px;
+  font-size: 18px;
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 2px;
+  }
+
+button {
+  margin-left: 20px;
+  font-size: 0.8rem;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+select {
+  font-size: calc(10px + 1.1vw);
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+p {
+  font-size: calc(12px + 1vw);
+  text-align: center;
+  line-height: 1cm;
+}
+
+footer > a {
+  width: calc(0.75rem + 2vw);
+  height: calc(0.75rem + 2vw);
+}
+
+/*class selectors*/
+.matrix {
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.social_link {
+  width: calc(0.75rem + 2vw);
+  height: calc(0.75rem + 2vw);
+}
+
+a > .social_link {
+  transition: transform 0.2s;
+}
+
+a > .social_link:hover {
+  transform: scale(1.08);
+}
+
+.lang-sizeInput {
+  display: inline;
+}
+
+/*ID selectors*/
+#findButton {
+  display: block;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+/*stylization of dimensional input, so that there is no tearing when narrowing or expanding the screen*/
+#dimensions {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#dimensions-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#dimensions-wrapper {
+  text-align: center;
+}
+
+#dimensionsAll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#rows,
+#columns {
+  margin: 0;
+  margin: 0px 10px;
+}
+
+#logo{
+  width: calc(1.5rem + 3vw);
+  height: calc(1.5rem + 3vw);
+}
