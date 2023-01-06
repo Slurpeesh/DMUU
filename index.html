@@ -27,10 +27,19 @@
         </select>
     </header>
     <main>
+        <div id="methods">
+            <ul>
+                <li><button class="method lang-maximin" id="maximin">Maximin</button></li>
+                <li><button class="method lang-maximax" id="maximax">Maximax</button></li>
+                <li><button class="method lang-Hurwitz" id="hurwitz">Hurwitz</button></li>
+                <li><button class="method lang-minimax" id="minimax">Minimax regret</button></li>
+                <li><button class="method lang-Laplace" id="laplace">Laplace</button></li>
+            </ul>
+        </div>
         <div id="dimensionsAll">
             <span id="dimensions-wrapper">
                 <p class="lang-sizeInput">Please, input the size of a matrix: </p>
-                <span id="dimensions"><span id="dimensions-container"><input id="rows" type="text"> &times; <input id="columns" type="text"></span></span><button class="lang-accept">Accept</button>
+                <span id="dimensions"><span id="dimensions-container"><input id="rows" type="text"> &times; <input id="columns" type="text"></span></span><button class="lang-accept" id="acceptButton">Accept</button>
             </span>
         </div>
     </main>
