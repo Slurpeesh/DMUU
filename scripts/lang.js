@@ -74,6 +74,16 @@ const langArr = {
         "ru": "Критерий Лапласа"
     },
 
+    "p-criteria": {
+        "en": "P-criteria",
+        "ru": "Критерий произведений"
+    },
+
+    "allCriteria": {
+        "en": "All",
+        "ru": "Все"
+    },
+
     "alphaHurwitz": {
         "en": "Input an alpha parameter: α = ",
         "ru": "Введите параметр альфа: α = "

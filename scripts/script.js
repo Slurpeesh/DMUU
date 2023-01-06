@@ -7,6 +7,8 @@ let maximaxMethod = document.getElementById("maximax");
 let HurwitzMethod = document.getElementById("hurwitz");
 let minimaxMethod = document.getElementById("minimax");
 let LaplaceMethod = document.getElementById("laplace");
+let productCriteriaMethod = document.getElementById("p-criteria");
+let allCriteriaMethod = document.getElementById("allCriteria");
 
 //current chosen method
 chosenMethod = null;
@@ -165,6 +167,15 @@ function getSumOfArray(array) {
     return sumOfArray;
 };
 
+//an auxiliary function that returns the product of an array
+function getProductOfArray(array) {
+    let productOfArray = 1;
+    array.forEach(element => {
+        productOfArray = productOfArray * element;
+    });
+    return productOfArray;
+};
+
 //an auxiliary function that returns the nth column of the matrix
 function giveColumn(mat, n) {
     let col = [];
@@ -182,6 +193,19 @@ function getMaxOfArray(array) {
 //is an auxiliary function for finding the maximum in the array
 function getMinOfArray(array) {
     return Math.min.apply(null, array);
+};
+
+//a function that return minimum value in matrix
+function getMinValueOfMatrix(matrix) {
+    let minMatrixValue = matrix[0][0];
+    for (i=0; i < matrix.length; i++) {
+        for (j=0; j < matrix[0].length; j++) {
+            if (matrix[i][j] < minMatrixValue) {
+                minMatrixValue = matrix[i][j];
+            };
+        };
+    };
+    return minMatrixValue;
 };
 
 //algorithms for finding solutions due to chosen criteria are below
@@ -279,6 +303,75 @@ function findLaplace() {
     return LaplaceIndices;
 };
 
+//function that returns the array of indices of the rows with maximum product (multiplication) value
+function findProductCriteria() {
+    //bringing the matrix values to positive values
+    let minMatrixValue = getMinValueOfMatrix(matrix_object);
+    if (minMatrixValue <= 0) {
+        for (i=0; i < rows; i++) {
+            for (j=0; j < cols; j++) {
+                matrix_object[i][j] = matrix_object[i][j] + Math.abs(minMatrixValue) + 1
+            };
+        };
+    };
+    //finding products of rows
+    let productValuesArray = [];
+    for (i=0; i < rows; i++) {
+        productValuesArray.push(getProductOfArray(matrix_object[i]));
+    };
+    //finding indices of rows with maximum product
+    let maxProductValue = getMaxOfArray(productValuesArray);
+    let productCriteriaIndices = [];
+    for (i=0; i < productValuesArray.length; i++) {
+        if (productValuesArray[i] == maxProductValue) {
+            productCriteriaIndices.push(i);
+        };
+    };
+    return productCriteriaIndices;
+};
+
+//а function that returns the indices of rows that are the best among all the criteria
+function findAllCriteria() {
+    //finding all solutions by all criteria
+    let solutionIndicesArray = [];
+    let sumsOfIndices = {};
+    solutionIndicesArray.push(findMaximin());
+    solutionIndicesArray.push(findMaximax());
+    solutionIndicesArray.push(findHurwitz());
+    solutionIndicesArray.push(findMinimax());
+    solutionIndicesArray.push(findLaplace());
+    solutionIndicesArray.push(findProductCriteria());
+    console.log(solutionIndicesArray)
+    //search for the quantity with which the indices meet
+    solutionIndicesArray.forEach(solutionIndices => {
+        solutionIndices.forEach(index => {
+            if (!(index in sumsOfIndices)) {
+                sumsOfIndices[index] = 1;
+            } else {
+                sumsOfIndices[index] += 1;
+            };
+        });
+    });
+    console.log(sumsOfIndices)
+    //finding maximum amount of entries among indices
+    let maxAmount = 0;
+    for (key in sumsOfIndices) {
+        if (sumsOfIndices[key] > maxAmount) {
+            maxAmount = sumsOfIndices[key];
+        };
+    };
+    console.log(maxAmount)
+    //finding all indices with maximum amount of entries
+    let allCriteriaIndices = [];
+    for (key in sumsOfIndices) {
+        if (sumsOfIndices[key] == maxAmount) {
+            allCriteriaIndices.push(key);
+        };
+    };
+    console.log(allCriteriaIndices)
+    return allCriteriaIndices;
+};
+
 //a main function that finds solution
 function findSolution() {
     let lang = langSelect.value;
@@ -309,6 +402,13 @@ function findSolution() {
             break;
         case LaplaceMethod:
             solutionIndicesArray = findLaplace();
+            break;
+        case productCriteriaMethod:
+            solutionIndicesArray = findProductCriteria();
+            break;
+        case allCriteriaMethod:
+            checkAlphaHurwitz();
+            solutionIndicesArray = findAllCriteria();
             break;
     };
     //visually mark up solutions
@@ -411,6 +511,7 @@ function maximaxHandler() {
 function HurwitzMethodHandler() {
     styleChosenMethod(HurwitzMethod);
     chosenMethod = HurwitzMethod;
+    //adding alpha parameter
     if (document.getElementById("alphaContainer") == null) {
         createAlphaHurwitz();
     };
@@ -430,12 +531,30 @@ function LaplaceMethodHandler() {
     deleteAlphaHurwitz();
 };
 
+function productCriteriaMethodHandler() {
+    styleChosenMethod(productCriteriaMethod);
+    chosenMethod = productCriteriaMethod;
+    //deleting alpha Hurwitz block if exists
+    deleteAlphaHurwitz();
+};
+
+function allCriteriaMethodHandler() {
+    styleChosenMethod(allCriteriaMethod);
+    chosenMethod = allCriteriaMethod;
+    //adding alpha parameter
+    if (document.getElementById("alphaContainer") == null) {
+        createAlphaHurwitz();
+    };
+};
+
 //listeners to pressing methods buttons
 maximinMethod.addEventListener("click", maximinHandler);
 maximaxMethod.addEventListener("click", maximaxHandler);
 HurwitzMethod.addEventListener("click", HurwitzMethodHandler);
 minimaxMethod.addEventListener("click", minimaxHandler);
 LaplaceMethod.addEventListener("click", LaplaceMethodHandler);
+productCriteriaMethod.addEventListener("click", productCriteriaMethodHandler);
+allCriteriaMethod.addEventListener("click", allCriteriaMethodHandler);
 
 //listener to pressing the "Accept" button
 acceptButton.addEventListener("click", createMatrix);
