@@ -265,17 +265,18 @@ function findHurwitz() {
 //function that returns the array of indices of the rows with minimax value in a regret matrix
 function findMinimax() {
     //finding regret matrix
+    let regretMatrix = structuredClone(matrix_object);
     for (j=0; j < cols; j++) {
         let col = giveColumn(matrix_object, j);
         let maxColValue = getMaxOfArray(col);
         for (i=0; i < rows; i++) {
-            matrix_object[i][j] = maxColValue - matrix_object[i][j];
+            regretMatrix[i][j] = maxColValue - matrix_object[i][j];
         };
     };
     //finding the array of indices of the rows with maximin value in a regret matrix
     let maxValues = [];
     for (i=0; i < rows; i++) {
-        maxValues.push(getMaxOfArray(matrix_object[i]));
+        maxValues.push(getMaxOfArray(regretMatrix[i]));
     };
     let minimaxValue = getMinOfArray(maxValues);
     let minimaxIndices = [];
@@ -306,18 +307,19 @@ function findLaplace() {
 //function that returns the array of indices of the rows with maximum product (multiplication) value
 function findProductCriteria() {
     //bringing the matrix values to positive values
+    let positiveMatrix = structuredClone(matrix_object);
     let minMatrixValue = getMinValueOfMatrix(matrix_object);
     if (minMatrixValue <= 0) {
         for (i=0; i < rows; i++) {
             for (j=0; j < cols; j++) {
-                matrix_object[i][j] = matrix_object[i][j] + Math.abs(minMatrixValue) + 1
+                positiveMatrix[i][j] = matrix_object[i][j] + Math.abs(minMatrixValue) + 1
             };
         };
     };
     //finding products of rows
     let productValuesArray = [];
     for (i=0; i < rows; i++) {
-        productValuesArray.push(getProductOfArray(matrix_object[i]));
+        productValuesArray.push(getProductOfArray(positiveMatrix[i]));
     };
     //finding indices of rows with maximum product
     let maxProductValue = getMaxOfArray(productValuesArray);
@@ -341,7 +343,6 @@ function findAllCriteria() {
     solutionIndicesArray.push(findMinimax());
     solutionIndicesArray.push(findLaplace());
     solutionIndicesArray.push(findProductCriteria());
-    console.log(solutionIndicesArray)
     //search for the quantity with which the indices meet
     solutionIndicesArray.forEach(solutionIndices => {
         solutionIndices.forEach(index => {
@@ -352,7 +353,6 @@ function findAllCriteria() {
             };
         });
     });
-    console.log(sumsOfIndices)
     //finding maximum amount of entries among indices
     let maxAmount = 0;
     for (key in sumsOfIndices) {
@@ -360,7 +360,6 @@ function findAllCriteria() {
             maxAmount = sumsOfIndices[key];
         };
     };
-    console.log(maxAmount)
     //finding all indices with maximum amount of entries
     let allCriteriaIndices = [];
     for (key in sumsOfIndices) {
@@ -368,7 +367,6 @@ function findAllCriteria() {
             allCriteriaIndices.push(key);
         };
     };
-    console.log(allCriteriaIndices)
     return allCriteriaIndices;
 };
 
