@@ -11,7 +11,6 @@ body {
   min-height: 100%;
   margin: 0;
   background-color: rgb(185, 206, 232);
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
 }
